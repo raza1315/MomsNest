@@ -1,20 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { View, StatusBar, Platform, UIManager } from 'react-native'
+import React from 'react'
+// safe area
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+// Navigation component import 
+import Navigation from './Navigation/Navigation'
+import {UserContext} from './UserContext';
 
-export default function App() {
+//enabling for smooth layout animation
+if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <SafeAreaProvider >
+      <StatusBar translucent={true} barStyle="light-content" backgroundColor="transparent" />
+      <View style={{ flex: 1 }}>
+        <UserContext>
+          <Navigation />
+        </UserContext>
+      </View>
+    </SafeAreaProvider>
+  )
+
+  
+
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App
